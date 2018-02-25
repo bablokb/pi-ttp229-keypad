@@ -1,0 +1,51 @@
+#!/bin/bash
+# --------------------------------------------------------------------------
+# This script installs files and services specific to this project.
+#
+# Author: Bernhard Bablok
+# License: GPL3
+#
+# Website: https://github.com/bablokb/pi-tp229-keybad
+#
+# --------------------------------------------------------------------------
+
+# --- defaults used during installation   ----------------------------------
+
+# --- basic packages   ------------------------------------------------------
+
+PACKAGES=""
+if [ -n "$PACKAGES" ]; then
+  apt-get update
+  apt-get -y install $PACKAGES
+fi
+
+# --- install specific files   ----------------------------------------------
+
+rand="$RANDOM"
+if [ -f /etc/tp229-keypad.conf ]; then
+  # save current configuration
+  mv /etc/tp229-keypad.conf /etc/tp229-keypad.conf.$rand
+fi
+
+for f in `find $(dirname "$0")/../files/ -type f`; do
+  cp "$f" "${f#*files}"
+  chown root:root "${f#*files}"
+done
+chmod 755 /usr/local/sbin/tp229-reader.py
+chmod 644 /etc/tp229-keypad.conf
+chmod 644 /etc/systemd/system/tp229-keypad.service
+
+# restore old configuration
+if [ -f /etc/tp229-keypad.conf.$rand ]; then
+  mv -f /etc/tp229-keypad.conf /etc/tp229-keypad.conf.new
+  mv /etc/tp229-keypad.conf.$rand /etc/tp229-keypad.conf
+  echo -e "\nnew version of configuration file: /etc/tp229-keypad.conf.new"
+fi
+
+# --- activate service   ----------------------------------------------------
+
+systemctl enable tp229-keypad.service
+
+# --- final configuration is manual   ---------------------------------------
+
+echo -e "\n### Please edit /etc/tp229-keypad.conf and start tp229-keypad.service"
