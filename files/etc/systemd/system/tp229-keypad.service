@@ -1,0 +1,22 @@
+# --------------------------------------------------------------------------
+# Systemd service Definition for tp229-keypad.service.
+#
+# The service just starts the script /usr/local/sbin/tp229-reader.py
+#
+# Author: Bernhard Bablok
+# License: GPL3
+#
+# Website: https://github.com/bablokb/pi-tp229-keypad
+#
+# --------------------------------------------------------------------------
+
+[Unit]
+Description=Start TP229 reader process
+After=multi-user.target
+ 
+[Service]
+Type=simple
+ExecStart=/usr/local/sbin/tp229-reader.py
+
+[Install]
+WantedBy=multi-user.target
