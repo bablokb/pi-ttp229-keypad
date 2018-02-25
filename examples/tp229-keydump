@@ -1,0 +1,25 @@
+#!/bin/bash
+# --------------------------------------------------------------------------
+# Sample script for tp229-keypad.service
+#
+# This script reads events from the pipe /var/run/tp229-keypad.fifo and
+# dumps the the result to the console.
+#
+# --------------------------------------------------------------------------
+# Author: Bernhard Bablok
+# License: GPL3
+#
+# Website: https://github.com/bablokb/pi-tp229-keypad
+# --------------------------------------------------------------------------
+
+# wait for pipe to be available
+
+while ! test -p /var/run/tp229-keypad.fifo; do
+  sleep 1
+done
+
+# read from pipe and dump values to stdout
+
+while read key; do
+  echo "key: $key"
+done < /var/run/tp229-keypad.fifo
