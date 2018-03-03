@@ -12,7 +12,7 @@
 #
 # -----------------------------------------------------------------------------
 
-import os, sys, time
+import os, sys, time, signal
 import RPi.GPIO as GPIO
 import ConfigParser
 
