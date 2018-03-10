@@ -41,3 +41,22 @@ data-pin SDO. Any pin will do fine. You have to enter the pins in the
 file `/etc/ttp229-keypad.conf`. In this configuration-file you can also
 configure some timing-parameters. Change these values in case your
 programm has problems reading the keys (e.g. key-misses or repeated keys).
+
+After finishing configuration, start the service with
+
+    sudo systemctl start ttp229-keypad.service
+
+
+Test
+====
+
+You can find a simple test-script in `examples/ttp229-keydump`. Make sure
+the keypad is connected and the service is up and running:
+
+    sudo systemctl status ttp229-keypad.service
+
+Then start the test-program (assuming you haven't changed the directory):
+
+    examples/ttp229-keydump
+
+As soon as you touch the keys they should appear in the terminal.
