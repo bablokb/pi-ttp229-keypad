@@ -1,14 +1,14 @@
 #!/usr/bin/python
 # -----------------------------------------------------------------------------
-# This script polls the TP229 and writes key-events to the pipe
-# /var/run/tp229-keypad.fifo.
+# This script polls the TTP229 and writes key-events to the pipe
+# /var/run/ttp229-keypad.fifo.
 #
-# Please configure the two pins used by the TP229-keybad in /etc/tp229-keypad.conf
+# Please configure the two pins used by the TTP229-keybad in /etc/ttp229-keypad.conf
 #
 # Author: Bernhard Bablok
 # License: GPL3
 #
-# Website: https://github.com/bablokb/pi-tp229-keypad
+# Website: https://github.com/bablokb/pi-ttp229-keypad
 #
 # -----------------------------------------------------------------------------
 
@@ -16,7 +16,7 @@ import os, sys, time, signal
 import RPi.GPIO as GPIO
 import ConfigParser
 
-FIFO_NAME="/var/run/tp229-keypad.fifo"
+FIFO_NAME="/var/run/ttp229-keypad.fifo"
 
 # --- read configuration   ----------------------------------------------------
 
@@ -97,7 +97,7 @@ def read_keys():
 
 # read configuration
 parser = ConfigParser.RawConfigParser()
-parser.read('/etc/tp229-keypad.conf')
+parser.read('/etc/ttp229-keypad.conf')
 read_config(parser)
 
 # setup signal-handler
